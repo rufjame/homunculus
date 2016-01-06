@@ -8,13 +8,31 @@ type_dict = dict()
 type_id_dict = dict()
 
 
-def get_price_for_string(type_name: str):
+def handle(message, client):
+    args = message.content[7:]
 
+    try:
+        price, item_type = get_price_for_string(args.lower())
+        client.send_message(message.channel,
+                            "Lowest sell price for {} in jita: {:,.2f}"
+                            .format(item_type, price))
+    except KeyError:
+        client.send_message(message.channel,
+                            "Thing not found. Enter a thing I can find.")
+    except Exception as err:
+        print("Shit crashed and burned, error:", err)
+        client.send_message(message.channel,
+                            "Shit crashed and burned. Poke Az.")
+
+
+def get_price_for_string(type_name: str):
     # Shortcut.
     if type_name == "plex":
         return get_jita_sell_price(29668), "PLEX"
     else:
-        return get_jita_sell_price(look_up_type_id(type_name)), look_up_type_name(look_up_type_id(type_name))
+        return get_jita_sell_price(
+            look_up_type_id(type_name)), look_up_type_name(
+            look_up_type_id(type_name))
 
 
 def get_jita_sell_price(type_id: int):
@@ -53,7 +71,7 @@ def look_up_type_id(type_name: str) -> id:
         raise KeyError
 
 
-def load_typeids_file(path: str = TYPEIDS_CSV):
+def load_typeids_file(path: str):
     with open(path, 'r', encoding='utf8') as f:
         for line in f:
             type_id_raw = line[:7]
@@ -64,3 +82,7 @@ def load_typeids_file(path: str = TYPEIDS_CSV):
 
             type_id_dict[type_id] = type_name
             type_dict[type_name] = type_id
+
+
+def init():
+    load_typeids_file(TYPEIDS_CSV)
