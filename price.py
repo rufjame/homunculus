@@ -31,8 +31,8 @@ def get_price_for_string(type_name: str):
         return get_jita_sell_price(29668), "PLEX"
     else:
         return get_jita_sell_price(
-            look_up_type_id(type_name)), look_up_type_name(
-            look_up_type_id(type_name))
+                look_up_type_id(type_name)), look_up_type_name(
+                look_up_type_id(type_name))
 
 
 def get_jita_sell_price(type_id: int):

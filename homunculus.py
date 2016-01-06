@@ -1,5 +1,6 @@
 import discord
 import price
+import who
 
 
 def log_in_client(client: discord.Client):
@@ -21,6 +22,9 @@ def on_message(message):
     if message.content.startswith('!price'):
         price.handle(message, client)
 
+    if message.content.startswith('!who'):
+        who.handle(message, client)
+
     if message.content.startswith('Are you there?'):
         client.send_message(message.channel,
                             "Yes, yes I am. No worries. Everything is fine.")
@@ -41,5 +45,6 @@ def on_ready():
     print('Connected!')
     print('Username: ' + client.user.name)
     print('ID: ' + client.user.id)
+
 
 client.run()
