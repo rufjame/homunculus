@@ -1,12 +1,12 @@
 import discord
-import price
-import who
+
+from plugins import price, who
 
 
 def log_in_client(client: discord.Client):
     with open('account') as f:
-        str = f.read()
-    name, pw = str.split(' ')
+        string = f.read()
+    name, pw = string.split(' ')
     client.login(name, pw)
 
 

@@ -1,11 +1,9 @@
-import zkb
-import eve_xml
+from api import eve_xml, zkb
 
 
 def handle(message, client):
     args = message.content[5:]
 
-    # try:
     char_id = eve_xml.get_entity_id_for_name(args)
     zkb_stats = zkb.query_character_stats(char_id)
 
@@ -17,4 +15,3 @@ def handle(message, client):
             eve_xml.get_entity_name(zkb_stats['info']['allianceID']))
 
     client.send_message(message.channel, msg)
-    # except Exception:

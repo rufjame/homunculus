@@ -1,22 +1,11 @@
-# Shit to be done
-## Improvements
-- Improve fuzzy search for items 
-- Fully decouple eve-central from price module
-- Optimise HTTP requests for !who, ie, bundle two eve-xml calls into one.
-- Modularise fully, standardise to three functions, `handle`, `init` and `help`.
- 
-## New Features.
-### Logging
-- Yeah we kinda need this. 
+Note: Moved all the issues and things to be done to the actual issue tracker.
 
-### !who 
-- ZKB stats
-- Eve-Who stats
-    
-### !help
-- Implement a help-string
- 
-### !fweight
-Ohboy. 
-- Count-down timer to shipping
-- API access for contract status (oh man) 
+# Homunculus: A [bad] Discord bot for Eve-Online
+
+## Features
+- Price look-up (only Jita for now, region and system support is coming. 
+- Quick character look-up. (Things like current corp/alliance, K/D)
+
+## Requirements
+- Python 3.5
+- `discord.py`
