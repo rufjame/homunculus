@@ -1,5 +1,4 @@
 import discord
-import sys
 from plugins import price, who
 from util.discord_util import reply, log_in_client
 
