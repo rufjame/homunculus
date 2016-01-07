@@ -1,4 +1,4 @@
-Note: Moved all the issues and things to be done to the actual issue tracker.
+[![Build Status](https://travis-ci.org/Az4reus/homunculus.svg?branch=master)](https://travis-ci.org/Az4reus/homunculus)
 
 # Homunculus: A [bad] Discord bot for Eve-Online
 
