@@ -28,22 +28,34 @@ def on_message(message):
 
     if message.content.startswith('!price'):
         price.handle(message, client)
+        return
 
     if message.content.startswith('!who'):
         who.handle(message, client)
+        return
 
     if message.content.startswith('Are you there?'):
         client.send_message(message.channel,
                             "Yes, yes I am. No worries. Everything is fine.")
+        return
+
+    # This needed to be done.
+    if message.content.startswith('!poop'):
+        client.send_message(message.channel,
+                            "{} and Poop are friends."
+                            .format(message.author.mention()))
+        return
 
     if message.content.startswith('!ping'):
         client.send_message(message.channel,
                             "We're not doing this again.")
+        return
 
     if message.content.startswith('!trivia'):
         client.send_message(message.channel,
                             "Fuck you {}. Blame Fenrir."
                             .format(message.author.mention()))
+        return
 
 
 @client.event
