@@ -1,17 +1,10 @@
 import discord
 from plugins import price, who
-from util.discord_util import reply
+from util.discord_util import reply, log_in_client
 
+# Configure what to load here.
 loaded_modules = [price,
                   who]
-
-
-def log_in_client(c: discord.Client):
-    with open('account') as f:
-        line = f.read()
-    name, pw = line.split(' ')
-    c.login(name, pw)
-
 
 client = discord.Client()
 log_in_client(client)
