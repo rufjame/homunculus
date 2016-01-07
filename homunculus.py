@@ -1,12 +1,11 @@
 import discord
 from plugins import price, who
 from util.discord_util import reply, log_in_client
+from util.modules_util import make_module_dict
 
-# Configure what to load here. Keys represent commands, and
-# each value represents the module that handles the associated
-# command
-loaded_modules = [price,
-                  who]
+# Configure what to load here.
+modules = make_module_dict([price,
+                            who])
 
 client = discord.Client()
 log_in_client(client)
@@ -22,10 +21,8 @@ def on_message(message):
     #
     
     handled_by_module = False
-    for m in loaded_modules:
-        # remove plugin package prefix
-        m_command = '!' + m.__name__[len(m.__package__)+1:]
-        if message.content.startswith(m_command):
+    for c, m in modules.items():
+        if message.content.startswith(c):
             m.handle(message, client)
             handled_by_module = True
     
@@ -38,7 +35,7 @@ def on_message(message):
         return
     
     # elif message.content.startswith('!help'):
-    #     for m in modules:
+    #     for _, m in modules.items():
     #         m.help()
 
     elif message.content.startswith('Are you there?'):
@@ -61,7 +58,7 @@ def on_message(message):
 
 @client.event
 def on_ready():
-    for m in loaded_modules:
+    for c, m in modules.items():
         m.init()
     print('Connected!')
     print('Username: ' + client.user.name)
