@@ -9,7 +9,7 @@ def handle(message, client):
     char_id = eve_xml.get_entity_id_for_name(args)
     zkb_stats = zkb.query_character_stats(char_id)
 
-    msg = "\n{} [{} - {}] \n {} \n {}".format(
+    msg = "\n{} [{} - {}] \n{} \n{}".format(
             zkb_stats['info']['name'],
             zkb_stats['shipsDestroyed'],
             zkb_stats['shipsLost'],
