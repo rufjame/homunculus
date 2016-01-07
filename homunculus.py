@@ -1,17 +1,10 @@
 import discord
-
 from plugins import price, who
+from util.discord_util import reply, log_in_client
 
-modules = [price,
-           who]
-
-
-def log_in_client(c: discord.Client):
-    with open('account') as f:
-        string = f.read()
-    name, pw = string.strip().split(' ')
-    c.login(name, pw)
-
+# Configure what to load here.
+loaded_modules = [price,
+                  who]
 
 client = discord.Client()
 log_in_client(client)
@@ -22,33 +15,37 @@ def on_message(message):
     if message.author == client.user:
         return
 
-    # if message.content.startswith('!help'):
+    # elif message.content.startswith('!help'):
     #     for m in modules:
     #         m.help()
 
-    if message.content.startswith('!price'):
+    elif message.content.startswith('!price'):
         price.handle(message, client)
 
-    if message.content.startswith('!who'):
+    elif message.content.startswith('!who'):
         who.handle(message, client)
 
-    if message.content.startswith('Are you there?'):
-        client.send_message(message.channel,
-                            "Yes, yes I am. No worries. Everything is fine.")
+    elif message.content.startswith('Are you there?'):
+        reply(client, message, "Yes, yes I am. No worries. Everything is fine.")
 
-    if message.content.startswith('!ping'):
-        client.send_message(message.channel,
-                            "We're not doing this again.")
+    # This needed to be done.
+    elif message.content.startswith('!poop'):
+        post = "{} and Poop are friends."\
+            .format(message.author.mention())
+        reply(client, message, post)
 
-    if message.content.startswith('!trivia'):
-        client.send_message(message.channel,
-                            "Fuck you {}. Blame Fenrir."
-                            .format(message.author.mention()))
+    elif message.content.startswith('!ping'):
+        reply(client, message, "We're not doing this again.")
+
+    elif message.content.startswith('!trivia'):
+        post = "Fuck you, {}. Blame Fenrir."\
+            .format(message.author.mention())
+        reply(client, message, post)
 
 
 @client.event
 def on_ready():
-    for m in modules:
+    for m in loaded_modules:
         m.init()
     print('Connected!')
     print('Username: ' + client.user.name)
