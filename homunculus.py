@@ -1,10 +1,11 @@
 import discord
 from plugins import price, who
 from util.discord_util import reply, log_in_client
+from util.modules_util import make_module_dict
 
 # Configure what to load here.
-loaded_modules = [price,
-                  who]
+modules = make_module_dict([price,
+                            who])
 
 client = discord.Client()
 log_in_client(client)
@@ -14,16 +15,28 @@ log_in_client(client)
 def on_message(message):
     if message.author == client.user:
         return
+        
+    #
+    # Module commands
+    #
+    
+    handled_by_module = False
+    for c, m in modules.items():
+        if message.content.startswith(c):
+            m.handle(message, client)
+            handled_by_module = True
+    
+    
+    #
+    # Global commands
+    #
 
+    if handled_by_module:
+        return
+    
     # elif message.content.startswith('!help'):
-    #     for m in modules:
+    #     for _, m in modules.items():
     #         m.help()
-
-    elif message.content.startswith('!price'):
-        price.handle(message, client)
-
-    elif message.content.startswith('!who'):
-        who.handle(message, client)
 
     elif message.content.startswith('Are you there?'):
         reply(client, message, "Yes, yes I am. No worries. Everything is fine.")
@@ -45,7 +58,7 @@ def on_message(message):
 
 @client.event
 def on_ready():
-    for m in loaded_modules:
+    for _, m in modules.items():
         m.init()
     print('Connected!')
     print('Username: ' + client.user.name)
