@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.5"
+install:
+  - pip install discord.py
+notifications:
+  email:
+    recipients:
+      - az4reus+travis-ci-homunculus@gmail.com
+    on_success: always
+    on_failure: always

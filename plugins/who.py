@@ -1,6 +1,7 @@
 from api import eve_xml, zkb
 from util.discord_util import reply
 
+
 def init():
     pass
 
@@ -22,5 +23,5 @@ def handle(message, client):
         client.send_message(message.channel, msg)
 
     except TypeError:
-        reply(client, message, "Did not find your dude. "
+        reply(client, message, "\nDid not find your dude. "
                                "\nEnter a dude who's bad enough to be found. ")
