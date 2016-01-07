@@ -1,10 +1,13 @@
 import discord
+import sys
 from plugins import price, who
 from util.discord_util import reply, log_in_client
 
-# Configure what to load here.
-loaded_modules = [price,
-                  who]
+# Configure what to load here. Keys represent commands, and
+# each value represents the module that handles the associated
+# command
+loaded_modules = {'!price': price,
+                  '!who': who}
 
 client = discord.Client()
 log_in_client(client)
@@ -14,16 +17,28 @@ log_in_client(client)
 def on_message(message):
     if message.author == client.user:
         return
+        
+    #
+    # Module commands
+    #
+    
+    handled_by_module = False
+    for m in loaded_modules:
+        if message.content.startswith(m):
+            loaded_modules[m].handle(message, client)
+            handled_by_module = True
+    
+    
+    #
+    # Global commands
+    #
 
+    if handled_by_module:
+        return
+    
     # elif message.content.startswith('!help'):
     #     for m in modules:
-    #         m.help()
-
-    elif message.content.startswith('!price'):
-        price.handle(message, client)
-
-    elif message.content.startswith('!who'):
-        who.handle(message, client)
+    #         modules[m].help()
 
     elif message.content.startswith('Are you there?'):
         reply(client, message, "Yes, yes I am. No worries. Everything is fine.")
@@ -46,7 +61,7 @@ def on_message(message):
 @client.event
 def on_ready():
     for m in loaded_modules:
-        m.init()
+        loaded_modules[m].init()
     print('Connected!')
     print('Username: ' + client.user.name)
     print('ID: ' + client.user.id)
