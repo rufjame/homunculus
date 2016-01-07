@@ -58,7 +58,7 @@ def on_message(message):
 
 @client.event
 def on_ready():
-    for c, m in modules.items():
+    for _, m in modules.items():
         m.init()
     print('Connected!')
     print('Username: ' + client.user.name)
