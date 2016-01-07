@@ -2,12 +2,15 @@ import discord
 
 from plugins import price, who
 
+modules = [price,
+           who]
 
-def log_in_client(client: discord.Client):
+
+def log_in_client(c: discord.Client):
     with open('account') as f:
         string = f.read()
     name, pw = string.split(' ')
-    client.login(name, pw)
+    c.login(name, pw)
 
 
 client = discord.Client()
@@ -18,6 +21,10 @@ log_in_client(client)
 def on_message(message):
     if message.author == client.user:
         return
+
+    # if message.content.startswith('!help'):
+    #     for m in modules:
+    #         m.help()
 
     if message.content.startswith('!price'):
         price.handle(message, client)
@@ -41,7 +48,8 @@ def on_message(message):
 
 @client.event
 def on_ready():
-    price.init()
+    for m in modules:
+        m.init()
     print('Connected!')
     print('Username: ' + client.user.name)
     print('ID: ' + client.user.id)

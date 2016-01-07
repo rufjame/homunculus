@@ -1,6 +1,10 @@
 from api import eve_xml, zkb
 
 
+def init():
+    pass
+
+
 def handle(message, client):
     args = message.content[5:]
 
