@@ -9,7 +9,7 @@ modules = [price,
 def log_in_client(c: discord.Client):
     with open('account') as f:
         string = f.read()
-    name, pw = string.split(' ')
+    name, pw = string.strip().split(' ')
     c.login(name, pw)
 
 
