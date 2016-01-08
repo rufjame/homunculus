@@ -43,10 +43,10 @@ def on_message(message):
 
     # This needed to be done. With updated responses!
     elif message.content.startswith('!poop'):
-      if message.author.name == 'Ipoopedbad Ernaga':
-          post = "Narcissist"
+        if message.author.name == 'Ipoopedbad Ernaga':
+            post = "Narcissist"
         else
-          post = "{} and Poop are friends."\
+        post = "{} and Poop are friends."\
             .format(message.author.mention())
         reply(client, message, post)
 
